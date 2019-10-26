@@ -1,51 +1,45 @@
-import React from 'react';
-import { FlatList, ActivityIndicator, Text, View  } from 'react-native';
 
-export default class FetchExample extends React.Component {
+import * as React from 'react';
+import { StatusBar, View, TextInput } from 'react-native';
+import { LinearGradient } from 'expo';
 
-  constructor(props){
-    super(props);
-    this.state ={ isLoading: true}
-  }
+export default class App extends React.Component {
+  state = {
+    inputValue: ''
+  };
 
-  componentDidMount(){
-    return fetch('https://facebook.github.io/react-native/movies.json')
-      .then((response) => response.json())
-      .then((responseJson) => {
-
-        this.setState({
-          isLoading: false,
-          dataSource: responseJson.movies,
-        }, function(){
-
-        });
-
-      })
-      .catch((error) =>{
-        console.error(error);
-      });
-  }
-
-
-
-  render(){
-
-    if(this.state.isLoading){
-      return(
-        <View style={{flex: 1, padding: 20}}>
-          <ActivityIndicator/>
-        </View>
-      )
-    }
-
-    return(
-      <View style={{flex: 1, paddingTop:20}}>
-        <FlatList
-          data={this.state.dataSource}
-          renderItem={({item}) => <Text>{item.title}, {item.releaseYear}</Text>}
-          keyExtractor={({id}, index) => id}
-        />
-      </View>
+  render() {
+    return (
+        <LinearGradient colors={['#667eea', '#764ba2']} style={{ flex:1 }}>
+          <StatusBar barStyle="light-content" />
+          <View>
+            <TextInput
+              style={styles.input}
+              placeholder="Type here to add a to do."
+              placeholderTextColor={'#fff'}
+              multiline={true}
+              autoCapitalize="sentences"
+              underlineColorAndroid="transparent"
+              selectionColor={'white'}
+              maxLength={30}
+              returnKeyType="done"
+              autoCorrect={false}
+              blurOnSubmit={true}/>
+          </View>
+        </LinearGradient>
     );
+  }
+}
+
+const styles = {
+  input:
+    {
+      marginTop: 30,
+    paddingTop: 10,
+    paddingRight: 15,
+    paddingLeft: 15,
+    fontSize: 34,
+    color: 'white',
+    fontWeight: '500'
   }
 }
