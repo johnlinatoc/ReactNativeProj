@@ -1,7 +1,7 @@
 
 import * as React from 'react';
 import { StatusBar, View, TextInput } from 'react-native';
-import { LinearGradient } from 'expo';
+import { LinearGradient } from 'expo-linear-gradient';
 
 export default class App extends React.Component {
   state = {
