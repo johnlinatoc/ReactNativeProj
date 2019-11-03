@@ -1,17 +1,17 @@
 
 import * as React from 'react';
-import { StatusBar, View, TextInput } from 'react-native';
+import { StatusBar, View, TextInput, Text, FlatList, TouchableOpacity } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
 export default class App extends React.Component {
   state = {
-    inputValue: ''
+    inputValue: '',
+    todos: [],
   };
 
   changeText = value => {
     this.setState({
       inputValue: value,
-      todos: [],
     })
   }
 
@@ -33,15 +33,18 @@ export default class App extends React.Component {
   render() {
     const todos = this.state.todos.reverse().map((todo, key) =>
       <View style={{ flexDirection: 'row', marginTop: 20 }}>
-      <TouchableOpacity style={{
-        width: 20,
-        height: 20,
-        borderRadius: 20,
-        borderWidth: 30,
-        borderColor: 'white',
-        margin: 15
-      }}>
-    )
+        <TouchableOpacity style={{
+    width: 20,
+    height: 20,
+    borderRadius: 15,
+    borderWidth: 3,
+    borderColor: 'white',
+    margin: 15
+  }}>
+          </TouchableOpacity>
+        <Text style={{ paddingLeft: 5, marginTop:10, fontSize: 28, color: 'white'}}>{todo.title}</Text>
+      </View>
+    );
 
     return (
         <LinearGradient colors={['#667eea', '#764ba2']} style={{ flex:1 }}>
@@ -51,6 +54,7 @@ export default class App extends React.Component {
               style={styles.input}
               placeholder="Type here to add a to do."
               placeholderTextColor={'#fff'}
+              onSubmitEditing={this.addItem}
               onChangeText={this.changeText}
               value={this.state.inputValue}
               multiline={true}
@@ -61,6 +65,9 @@ export default class App extends React.Component {
               returnKeyType="done"
               autoCorrect={false}
               blurOnSubmit={true}/>
+          </View>
+          <View>
+          {todos}
           </View>
         </LinearGradient>
     );
